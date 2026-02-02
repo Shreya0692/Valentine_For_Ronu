@@ -73,7 +73,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 40px; /* Increased gap for initial state */
+            gap: 40px;
             height: 100px;
             position: relative;
         }
@@ -90,6 +90,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease-out; /* This makes it glide instead of disappear */
         }
 
         #yesBtn { background: #ffffff; color: #1b2735; position: relative; z-index: 2; }
@@ -97,7 +98,8 @@
         #noBtn { 
             background: #222; 
             color: #888; 
-            position: relative; /* Start relative so it stays in the gap */
+            position: absolute;
+            left: 260px; /* Precise starting point to the right of Yes */
             z-index: 999;
         }
 
@@ -129,37 +131,27 @@
         const yesBtn = document.getElementById('yesBtn');
 
         function moveButton() {
-            // Switch to fixed position ONLY once the mouse touches it the first time
+            // Screen boundaries
+            const maxWidth = window.innerWidth - 150;
+            const maxHeight = window.innerHeight - 80;
+
+            // Generate new coordinates
+            const randomX = Math.max(50, Math.floor(Math.random() * maxWidth));
+            const randomY = Math.max(50, Math.floor(Math.random() * maxHeight));
+
+            // Apply fixed position and move
             noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
             
-            const bWidth = 130;
-            const bHeight = 60;
-            const edgeSafe = 80; 
-
+            // Check if it's too close to Yes, if so, push it further
             const yesRect = yesBtn.getBoundingClientRect();
+            const noRect = noBtn.getBoundingClientRect();
             
-            let newX, newY;
-            let safe = false;
-
-            while (!safe) {
-                newX = Math.random() * (window.innerWidth - bWidth - (edgeSafe * 2)) + edgeSafe;
-                newY = Math.random() * (window.innerHeight - bHeight - (edgeSafe * 2)) + edgeSafe;
-
-                const yesCenterX = yesRect.left + (bWidth / 2);
-                const yesCenterY = yesRect.top + (bHeight / 2);
-                const noCenterX = newX + (bWidth / 2);
-                const noCenterY = newY + (bHeight / 2);
-
-                const distance = Math.sqrt(Math.pow(noCenterX - yesCenterX, 2) + Math.pow(noCenterY - yesCenterY, 2));
-
-                // Guaranteed distance of 300px away from Yes button center
-                if (distance > 300) {
-                    safe = true;
-                }
+            if (Math.abs(randomX - yesRect.left) < 150 && Math.abs(randomY - yesRect.top) < 100) {
+                noBtn.style.left = (randomX + 200) + 'px';
+                noBtn.style.top = (randomY + 200) + 'px';
             }
-
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
         }
 
         function accept() {
