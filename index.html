@@ -3,120 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Ronu ❤️</title>
+    <title>For Ron ❤️</title>
     <style>
         body {
+            margin: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f8ff; /* Light icy blue for the penguin */
-            font-family: 'Arial', sans-serif;
+            /* Vibrant popping gradient */
+            background: linear-gradient(135deg, #ff0055 0%, #ff9a9e 100%);
+            font-family: 'Arial Black', sans-serif;
             overflow: hidden;
         }
 
-        .container { text-align: center; }
-
-        /* The Cute Penguin */
-        .penguin {
-            font-size: 80px;
-            margin-bottom: 10px;
-            display: inline-block;
-            animation: waddle 1.5s infinite;
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        @keyframes waddle {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(-10deg); }
-            75% { transform: rotate(10deg); }
-            100% { transform: rotate(0deg); }
+        .penguin-img {
+            width: 200px;
+            height: auto;
+            margin-bottom: 15px;
         }
 
-        h1 { color: #2c3e50; font-size: 2.2rem; }
+        h1 {
+            color: white;
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 0px #d63384;
+            margin-bottom: 30px;
+        }
 
         .buttons {
-            margin-top: 50px;
             display: flex;
             justify-content: center;
             gap: 20px;
-            width: 100%;
+            min-height: 60px;
         }
 
-        /* Fixed size for both buttons */
         .btn {
-            width: 120px;
-            height: 50px;
-            font-size: 1.1rem;
+            width: 130px;
+            height: 55px;
+            font-size: 1.2rem;
             font-weight: bold;
             border: none;
-            border-radius: 15px;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: 0.2s;
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; }
-        #noBtn { background-color: #adb5bd; color: white; position: relative; }
+        #yesBtn { background-color: #ffffff; color: #ff0055; }
+        #noBtn { background-color: #333; color: white; position: relative; z-index: 1000; }
 
         #celebration { display: none; text-align: center; }
+        .savage-text { color: #fff; font-size: 3rem; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
     <div id="main-content" class="container">
-        <div class="penguin">🐧</div>
-        <h1>Ronu, will you be my valentine?</h1>
-        
-        <div class="buttons">
-            <button id="yesBtn" class="btn" onclick="accept()">Yes</button>
-            <button id="noBtn" class="btn" onmouseover="moveButton()">No</button>
-        </div>
-    </div>
-
-    <div id="celebration">
-        <div class="penguin">🐧💕</div>
-        <h1 style="color: #ff4d6d;">Yay! I knew it! 😘</h1>
-        <p style="font-size: 1.2rem;">See you on Valentine's Day, Ronu!</p>
-    </div>
-
-    <script>
-        function moveButton() {
-            const noBtn = document.getElementById('noBtn');
-            const yesBtn = document.getElementById('yesBtn');
-            const yesRect = yesBtn.getBoundingClientRect();
-            
-            let randomX, randomY;
-            let overlap = true;
-
-            // Keep calculating a new position until it doesn't overlap the Yes button
-            while (overlap) {
-                randomX = Math.floor(Math.random() * (window.innerWidth - 120));
-                randomY = Math.floor(Math.random() * (window.innerHeight - 50));
-
-                // Define a "buffer" zone around the Yes button
-                const buffer = 20;
-                const isOverlappingX = randomX + 120 > yesRect.left - buffer && randomX < yesRect.right + buffer;
-                const isOverlappingY = randomY + 50 > yesRect.top - buffer && randomY < yesRect.bottom + buffer;
-
-                if (!isOverlappingX || !isOverlappingY) {
-                    overlap = false;
-                }
-            }
-
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        }
-
-        function accept() {
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('celebration').style.display = 'block';
-            document.body.style.backgroundColor = "#ffccd5";
-        }
-    </script>
-</body>
-</html>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueGZueXFqYnZ4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/T86i6yDyKQzONWBDzE/giphy.gif" alt="Smiling Penguin"
