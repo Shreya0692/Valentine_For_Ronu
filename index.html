@@ -12,7 +12,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #ff4d6d; /* Solid color first as backup */
             background: linear-gradient(135deg, #ff0055 0%, #ff9a9e 100%);
             font-family: 'Arial Black', sans-serif;
             overflow: hidden;
@@ -24,13 +23,20 @@
             padding: 40px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 30px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             border: 2px solid rgba(255, 255, 255, 0.3);
             width: 90%;
             max-width: 500px;
+            position: relative;
         }
 
-        .penguin { font-size: 100px; margin-bottom: 20px; }
+        /* Happy Penguin Image */
+        .penguin { 
+            width: 180px; 
+            height: 180px; 
+            margin-bottom: 20px;
+            object-fit: contain;
+        }
 
         h1 {
             font-size: 2rem;
@@ -42,19 +48,22 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            height: 60px;
-            position: relative;
+            height: 70px;
         }
 
+        /* Buttons are forced to be identical size */
         .btn {
-            width: 120px;
-            height: 55px;
+            width: 130px !important;
+            height: 60px !important;
             font-size: 1.2rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         #yesBtn { background-color: white; color: #ff0055; }
@@ -62,19 +71,19 @@
         #noBtn { 
             background-color: #333; 
             color: white; 
-            position: absolute; 
-            right: 50px; /* Starting position */
+            position: absolute; /* Needed for initial layout */
+            z-index: 1000;
         }
 
         #celebration { display: none; }
-        .savage { font-size: 2.5rem; text-transform: uppercase; line-height: 1.2; }
+        .savage { font-size: 2.2rem; text-transform: uppercase; line-height: 1.1; margin-top: 10px; }
     </style>
 </head>
 <body>
 
     <div id="container">
         <div id="main-content">
-            <div class="penguin">🐧</div>
+            <img class="penguin" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmN6Z3Jvbm9xdnN6Ym5reGZ4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/T86i6yDyKQzONWBDzE/giphy.gif" alt="Happy Penguin">
             <h1>Ron, will you be my valentine?</h1>
             <div class="btn-wrapper">
                 <button id="yesBtn" class="btn" onclick="accept()">Yes</button>
@@ -83,25 +92,41 @@
         </div>
 
         <div id="celebration">
-            <div class="penguin">🐧✨</div>
+            <img class="penguin" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmN6Z3Jvbm9xdnN6Ym5reGZ4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/L4lvBps69q_XG/giphy.gif" alt="Dancing Penguin">
             <h1 class="savage">Took you long enough, Ron.</h1>
-            <p style="font-size: 1.2rem;">I knew you didn't have a choice anyway. ❤️</p>
+            <p style="font-size: 1.2rem; margin-top: 10px;">I knew you didn't have a choice anyway. ❤️</p>
         </div>
     </div>
 
     <script>
-        function moveButton() {
-            const noBtn = document.getElementById('noBtn');
-            const container = document.getElementById('container');
-            
-            // Calculate random position within the whole window
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
 
-            // Force it to stay visible and jump anywhere
+        function moveButton() {
+            const yesRect = yesBtn.getBoundingClientRect();
+            const btnWidth = 130;
+            const btnHeight = 60;
+            
+            let newX, newY;
+            let isOverlapping = true;
+
+            // Loop until we find a spot that is NOT over the Yes button
+            while (isOverlapping) {
+                newX = Math.random() * (window.innerWidth - btnWidth);
+                newY = Math.random() * (window.innerHeight - btnHeight);
+
+                // Check if the new No button position hits the Yes button area (with 100px extra safety)
+                const horizontalOverlap = newX + btnWidth > yesRect.left - 100 && newX < yesRect.right + 100;
+                const verticalOverlap = newY + btnHeight > yesRect.top - 100 && newY < yesRect.bottom + 100;
+
+                if (!horizontalOverlap || !verticalOverlap) {
+                    isOverlapping = false;
+                }
+            }
+
             noBtn.style.position = 'fixed';
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
         }
 
         function accept() {
