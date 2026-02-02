@@ -30,12 +30,12 @@
             position: relative;
         }
 
-        /* Happy Penguin Image */
+        /* High-reliability Happy Penguin */
         .penguin { 
-            width: 180px; 
-            height: 180px; 
+            width: 200px; 
+            height: 200px; 
             margin-bottom: 20px;
-            object-fit: contain;
+            border-radius: 20px;
         }
 
         h1 {
@@ -48,10 +48,10 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            height: 70px;
+            height: 80px;
         }
 
-        /* Buttons are forced to be identical size */
+        /* Buttons forced to be identical size */
         .btn {
             width: 130px !important;
             height: 60px !important;
@@ -64,15 +64,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
         }
 
-        #yesBtn { background-color: white; color: #ff0055; }
+        #yesBtn { background-color: white; color: #ff0055; position: relative; }
         
         #noBtn { 
             background-color: #333; 
             color: white; 
-            position: absolute; /* Needed for initial layout */
-            z-index: 1000;
+            position: absolute; 
+            z-index: 9999;
+            transition: none; /* Instant jump */
         }
 
         #celebration { display: none; }
@@ -83,7 +85,7 @@
 
     <div id="container">
         <div id="main-content">
-            <img class="penguin" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmN6Z3Jvbm9xdnN6Ym5reGZ4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/T86i6yDyKQzONWBDzE/giphy.gif" alt="Happy Penguin">
+            <img class="penguin" src="https://i.imgur.com/vHdfDms.gif" alt="Happy Penguin">
             <h1>Ron, will you be my valentine?</h1>
             <div class="btn-wrapper">
                 <button id="yesBtn" class="btn" onclick="accept()">Yes</button>
@@ -92,7 +94,7 @@
         </div>
 
         <div id="celebration">
-            <img class="penguin" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmN6Z3Jvbm9xdnN6Ym5reGZ4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/L4lvBps69q_XG/giphy.gif" alt="Dancing Penguin">
+            <img class="penguin" src="https://i.imgur.com/vHdfDms.gif" alt="Success">
             <h1 class="savage">Took you long enough, Ron.</h1>
             <p style="font-size: 1.2rem; margin-top: 10px;">I knew you didn't have a choice anyway. ❤️</p>
         </div>
@@ -110,14 +112,14 @@
             let newX, newY;
             let isOverlapping = true;
 
-            // Loop until we find a spot that is NOT over the Yes button
+            // Keep trying until the "No" button is at least 150px away from "Yes"
             while (isOverlapping) {
                 newX = Math.random() * (window.innerWidth - btnWidth);
                 newY = Math.random() * (window.innerHeight - btnHeight);
 
-                // Check if the new No button position hits the Yes button area (with 100px extra safety)
-                const horizontalOverlap = newX + btnWidth > yesRect.left - 100 && newX < yesRect.right + 100;
-                const verticalOverlap = newY + btnHeight > yesRect.top - 100 && newY < yesRect.bottom + 100;
+                const buffer = 150;
+                const horizontalOverlap = newX + btnWidth > yesRect.left - buffer && newX < yesRect.right + buffer;
+                const verticalOverlap = newY + btnHeight > yesRect.top - buffer && newY < yesRect.bottom + buffer;
 
                 if (!horizontalOverlap || !verticalOverlap) {
                     isOverlapping = false;
