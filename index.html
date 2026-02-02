@@ -5,51 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Ron ❤️</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            margin: 0;
             height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* Vibrant popping gradient */
+            background: #ff4d6d; /* Solid color first as backup */
             background: linear-gradient(135deg, #ff0055 0%, #ff9a9e 100%);
             font-family: 'Arial Black', sans-serif;
             overflow: hidden;
+            color: white;
         }
 
-        .container {
+        #container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.2);
             padding: 40px;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 30px;
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 500px;
         }
 
-        .penguin-img {
-            width: 200px;
-            height: auto;
-            margin-bottom: 15px;
-        }
+        .penguin { font-size: 100px; margin-bottom: 20px; }
 
         h1 {
-            color: white;
-            font-size: 2.5rem;
-            text-shadow: 3px 3px 0px #d63384;
+            font-size: 2rem;
+            text-shadow: 2px 2px 0px #d63384;
             margin-bottom: 30px;
         }
 
-        .buttons {
+        .btn-wrapper {
             display: flex;
             justify-content: center;
             gap: 20px;
-            min-height: 60px;
+            height: 60px;
+            position: relative;
         }
 
         .btn {
-            width: 130px;
+            width: 120px;
             height: 55px;
             font-size: 1.2rem;
             font-weight: bold;
@@ -57,17 +55,60 @@
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: 0.2s;
         }
 
-        #yesBtn { background-color: #ffffff; color: #ff0055; }
-        #noBtn { background-color: #333; color: white; position: relative; z-index: 1000; }
+        #yesBtn { background-color: white; color: #ff0055; }
+        
+        #noBtn { 
+            background-color: #333; 
+            color: white; 
+            position: absolute; 
+            right: 50px; /* Starting position */
+        }
 
-        #celebration { display: none; text-align: center; }
-        .savage-text { color: #fff; font-size: 3rem; text-transform: uppercase; }
+        #celebration { display: none; }
+        .savage { font-size: 2.5rem; text-transform: uppercase; line-height: 1.2; }
     </style>
 </head>
 <body>
 
-    <div id="main-content" class="container">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueGZueXFqYnZ4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/T86i6yDyKQzONWBDzE/giphy.gif" alt="Smiling Penguin"
+    <div id="container">
+        <div id="main-content">
+            <div class="penguin">🐧</div>
+            <h1>Ron, will you be my valentine?</h1>
+            <div class="btn-wrapper">
+                <button id="yesBtn" class="btn" onclick="accept()">Yes</button>
+                <button id="noBtn" class="btn" onmouseover="moveButton()">No</button>
+            </div>
+        </div>
+
+        <div id="celebration">
+            <div class="penguin">🐧✨</div>
+            <h1 class="savage">Took you long enough, Ron.</h1>
+            <p style="font-size: 1.2rem;">I knew you didn't have a choice anyway. ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const container = document.getElementById('container');
+            
+            // Calculate random position within the whole window
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+            // Force it to stay visible and jump anywhere
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function accept() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('celebration').style.display = 'block';
+            document.body.style.background = "linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)";
+        }
+    </script>
+</body>
+</html>
