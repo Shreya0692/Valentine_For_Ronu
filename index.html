@@ -3,113 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Ron 🌌✨</title>
+    <title>For Ron 🌌</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
+            margin: 0;
             height: 100vh;
-            width: 100vw;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #090a0f; /* Deep Space Black */
-            /* This creates the dotted star effect reliably */
-            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px);
-            background-size: 50px 50px;
-            font-family: sans-serif;
-            overflow: hidden;
+            background-color: #0b0d17; /* Space Black */
             color: white;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow: hidden;
         }
 
-        #container {
-            text-align: center;
-            padding: 30px;
-            background: rgba(20, 20, 30, 0.9);
-            border: 2px solid #3a3a5a;
+        /* Simple stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(white, transparent 1.5px);
+            background-size: 40px 40px;
+            opacity: 0.2;
+            z-index: -1; /* Pushes stars behind everything */
+        }
+
+        #card {
+            background: #161b22;
+            padding: 40px;
             border-radius: 20px;
-            width: 90%;
-            max-width: 450px;
-            position: relative;
-            box-shadow: 0 0 30px rgba(100, 100, 255, 0.3);
-            z-index: 10;
+            border: 1px solid #30363d;
+            text-align: center;
+            width: 350px;
+            z-index: 100;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
 
-        .icon { font-size: 60px; margin-bottom: 10px; display: block; }
+        h1 { font-size: 1.5rem; margin-bottom: 30px; }
 
-        h1 { font-size: 1.8rem; margin-bottom: 30px; line-height: 1.2; }
-
-        .btn-wrapper {
+        .btn-container {
             display: flex;
             justify-content: center;
-            align-items: center;
             gap: 20px;
-            height: 80px;
+            height: 60px;
         }
 
         .btn {
-            width: 120px !important;
-            height: 55px !important;
-            font-size: 1.1rem;
-            font-weight: bold;
+            width: 100px;
+            height: 50px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 1rem;
         }
 
-        #yesBtn { background: #fff; color: #000; }
-        #noBtn { background: #333; color: #888; position: absolute; left: 240px; }
+        #yesBtn { background-color: #ffffff; color: #0b0d17; }
+        
+        #noBtn { 
+            background-color: #21262d; 
+            color: #8b949e; 
+            position: absolute; /* Starts here */
+        }
 
         #celebration { display: none; }
-        
-        .date-box {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
+        .details {
             margin-top: 20px;
+            padding: 15px;
+            background: #0d1117;
+            border: 1px dashed #ff7eb9;
+            border-radius: 10px;
             text-align: left;
-            border: 1px dashed #ff9a9e;
         }
     </style>
 </head>
 <body>
 
-    <div id="container">
-        <div id="main-content">
-            <span class="icon">🚀</span>
+    <div class="stars"></div>
+
+    <div id="card">
+        <div id="question-page">
+            <div style="font-size: 50px; margin-bottom: 10px;">🚀</div>
             <h1>Ron, will you be my valentine?</h1>
-            <div class="btn-wrapper">
-                <button id="yesBtn" class="btn" onclick="accept()">Yes</button>
-                <button id="noBtn" class="btn" onmouseover="moveButton()">No</button>
+            <div class="btn-container">
+                <button id="yesBtn" class="btn" onclick="sayYes()">Yes</button>
+                <button id="noBtn" class="btn" onmouseover="runAway()">No</button>
             </div>
         </div>
 
         <div id="celebration">
-            <span class="icon">🛸</span>
-            <h1 style="color: #ff9a9e;">Took you long enough, Ron.</h1>
-            <div class="date-box">
-                <p><strong>LOCATION:</strong> World of Beer, Dublin</p>
-                <p><strong>TIME:</strong> 7:30 PM</p>
-                <p><strong>DATE:</strong> Feb 14, 2026</p>
+            <div style="font-size: 50px; margin-bottom: 10px;">🛸</div>
+            <h2 style="color: #ff7eb9;">Took you long enough, Ron.</h2>
+            <div class="details">
+                <p><strong>📍 WHERE:</strong> World of Beer, Dublin</p>
+                <p><strong>⏰ TIME:</strong> 7:30 PM</p>
+                <p><strong>📅 DATE:</strong> Feb 14, 2026</p>
             </div>
-            <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.7;">I've already cleared your schedule. ❤️</p>
+            <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6;">I've already cleared your schedule. ❤️</p>
         </div>
     </div>
 
     <script>
-        function moveButton() {
+        function runAway() {
             const btn = document.getElementById('noBtn');
-            // Keep button inside visible window with 100px padding
-            const x = Math.random() * (window.innerWidth - 200) + 50;
-            const y = Math.random() * (window.innerHeight - 150) + 50;
+            // Constrain movement to the visible window area
+            const x = Math.random() * (window.innerWidth - 120);
+            const y = Math.random() * (window.innerHeight - 60);
             
             btn.style.position = 'fixed';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
-        function accept() {
-            document.getElementById('main-content
+        function sayYes() {
+            document.getElementById('question-page').style.display = 'none';
+            document.getElementById('celebration').style.display = 'block';
+            document.body.style.backgroundColor = "#1a0033";
+        }
+    </script>
+
+</body>
+</html>
