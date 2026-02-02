@@ -12,7 +12,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Deep Space / Milky Way Gradient */
             background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
             font-family: 'Arial Black', sans-serif;
             overflow: hidden;
@@ -40,7 +39,6 @@
         #container {
             text-align: center;
             padding: 50px;
-            /* Galactic "Nebula" effect */
             background: rgba(255, 255, 255, 0.05);
             border-radius: 40px;
             backdrop-filter: blur(15px);
@@ -68,15 +66,15 @@
         h1 {
             font-size: 2rem;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            margin-bottom: 30px;
-            letter-spacing: 1px;
+            margin-bottom: 40px;
         }
 
         .btn-wrapper {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            height: 70px;
+            align-items: center;
+            gap: 40px; /* Increased gap for initial state */
+            height: 100px;
             position: relative;
         }
 
@@ -88,21 +86,18 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.2s;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
-        /* Supernova White for Yes */
-        #yesBtn { background: #ffffff; color: #1b2735; }
+        #yesBtn { background: #ffffff; color: #1b2735; position: relative; z-index: 2; }
         
-        /* Black Hole Gray for No */
         #noBtn { 
             background: #222; 
             color: #888; 
-            position: absolute; 
+            position: relative; /* Start relative so it stays in the gap */
             z-index: 999;
         }
 
@@ -134,9 +129,12 @@
         const yesBtn = document.getElementById('yesBtn');
 
         function moveButton() {
+            // Switch to fixed position ONLY once the mouse touches it the first time
+            noBtn.style.position = 'fixed';
+            
             const bWidth = 130;
             const bHeight = 60;
-            const edgeSafe = 60; // Extra safe margin for space theme
+            const edgeSafe = 80; 
 
             const yesRect = yesBtn.getBoundingClientRect();
             
@@ -144,10 +142,31 @@
             let safe = false;
 
             while (!safe) {
-                // Ensure it stays in the visible window
                 newX = Math.random() * (window.innerWidth - bWidth - (edgeSafe * 2)) + edgeSafe;
                 newY = Math.random() * (window.innerHeight - bHeight - (edgeSafe * 2)) + edgeSafe;
 
                 const yesCenterX = yesRect.left + (bWidth / 2);
                 const yesCenterY = yesRect.top + (bHeight / 2);
                 const noCenterX = newX + (bWidth / 2);
+                const noCenterY = newY + (bHeight / 2);
+
+                const distance = Math.sqrt(Math.pow(noCenterX - yesCenterX, 2) + Math.pow(noCenterY - yesCenterY, 2));
+
+                // Guaranteed distance of 300px away from Yes button center
+                if (distance > 300) {
+                    safe = true;
+                }
+            }
+
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+        }
+
+        function accept() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('celebration').style.display = 'block';
+            document.body.style.background = "radial-gradient(circle at center, #6a11cb 0%, #2575fc 100%)";
+        }
+    </script>
+</body>
+</html>
