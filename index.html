@@ -9,96 +9,107 @@
         
         body {
             height: 100vh;
+            width: 100vw;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-            font-family: 'Arial Black', sans-serif;
+            background: #090a0f; /* Deep Space Black */
+            /* This creates the dotted star effect reliably */
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px);
+            background-size: 50px 50px;
+            font-family: sans-serif;
             overflow: hidden;
             color: white;
         }
 
-        body::before {
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background-image: radial-gradient(#fff 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveStars 120s linear infinite;
-            opacity: 0.4;
-            z-index: 0;
-        }
-
-        @keyframes moveStars {
-            from { transform: translate(0, 0); }
-            to { transform: translate(-50%, -50%); }
-        }
-
         #container {
             text-align: center;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.07);
-            border-radius: 40px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            background: rgba(20, 20, 30, 0.9);
+            border: 2px solid #3a3a5a;
+            border-radius: 20px;
             width: 90%;
-            max-width: 550px;
-            box-shadow: 0 0 50px rgba(106, 17, 203, 0.3);
+            max-width: 450px;
             position: relative;
-            z-index: 1;
+            box-shadow: 0 0 30px rgba(100, 100, 255, 0.3);
+            z-index: 10;
         }
 
-        .space-icon { 
-            font-size: 70px;
-            display: block;
-            margin-bottom: 20px;
-            animation: float 3s infinite ease-in-out;
-        }
+        .icon { font-size: 60px; margin-bottom: 10px; display: block; }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-
-        h1 { font-size: 1.8rem; margin-bottom: 30px; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        h1 { font-size: 1.8rem; margin-bottom: 30px; line-height: 1.2; }
 
         .btn-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 40px;
-            height: 100px;
-            position: relative;
+            gap: 20px;
+            height: 80px;
         }
 
         .btn {
-            width: 130px !important;
-            height: 60px !important;
+            width: 120px !important;
+            height: 55px !important;
             font-size: 1.1rem;
             font-weight: bold;
             border: none;
-            border-radius: 50px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.25s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        #yesBtn { background: #ffffff; color: #1b2735; position: relative; z-index: 2; }
-        #noBtn { background: #222; color: #888; position: absolute; left: 260px; z-index: 999; }
+        #yesBtn { background: #fff; color: #000; }
+        #noBtn { background: #333; color: #888; position: absolute; left: 240px; }
 
-        /* Celebration Card Styling */
         #celebration { display: none; }
-        .savage { 
-            font-size: 1.8rem; 
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #a18cd1, #fbc2eb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        
+        .date-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+            border: 1px dashed #ff9a9e;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="main-content">
+            <span class="icon">🚀</span>
+            <h1>Ron, will you be my valentine?</h1>
+            <div class="btn-wrapper">
+                <button id="yesBtn" class="btn" onclick="accept()">Yes</button>
+                <button id="noBtn" class="btn" onmouseover="moveButton()">No</button>
+            </div>
+        </div>
+
+        <div id="celebration">
+            <span class="icon">🛸</span>
+            <h1 style="color: #ff9a9e;">Took you long enough, Ron.</h1>
+            <div class="date-box">
+                <p><strong>LOCATION:</strong> World of Beer, Dublin</p>
+                <p><strong>TIME:</strong> 7:30 PM</p>
+                <p><strong>DATE:</strong> Feb 14, 2026</p>
+            </div>
+            <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.7;">I've already cleared your schedule. ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            // Keep button inside visible window with 100px padding
+            const x = Math.random() * (window.innerWidth - 200) + 50;
+            const y = Math.random() * (window.innerHeight - 150) + 50;
+            
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
         }
 
-        .date-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 20px;
-            border
+        function accept() {
+            document.getElementById('main-content
