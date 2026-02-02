@@ -12,23 +12,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Milky Way / Nebula Background */
             background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
             font-family: 'Arial Black', sans-serif;
             overflow: hidden;
             color: white;
         }
 
-        /* Twinkling Stars Layer */
         body::before {
             content: "";
             position: absolute;
             width: 200%;
             height: 200%;
-            background-image: 
-                radial-gradient(#fff 1px, transparent 1px),
-                radial-gradient(#fff 1px, transparent 1px);
-            background-size: 50px 50px, 100px 100px;
+            background-image: radial-gradient(#fff 1px, transparent 1px);
+            background-size: 50px 50px;
             animation: moveStars 120s linear infinite;
             opacity: 0.4;
             z-index: 0;
@@ -41,36 +37,32 @@
 
         #container {
             text-align: center;
-            padding: 50px;
+            padding: 40px;
             background: rgba(255, 255, 255, 0.07);
             border-radius: 40px;
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             width: 90%;
-            max-width: 500px;
-            box-shadow: 0 0 50px rgba(106, 17, 203, 0.2);
+            max-width: 550px;
+            box-shadow: 0 0 50px rgba(106, 17, 203, 0.3);
             position: relative;
             z-index: 1;
         }
 
         .space-icon { 
-            font-size: 80px;
+            font-size: 70px;
             display: block;
             margin-bottom: 20px;
             animation: float 3s infinite ease-in-out;
         }
 
         @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
 
-        h1 {
-            font-size: 2rem;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-            margin-bottom: 40px;
-        }
+        h1 { font-size: 1.8rem; margin-bottom: 30px; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
 
         .btn-wrapper {
             display: flex;
@@ -89,84 +81,24 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-            transition: all 0.25s ease-out; /* Smooth gliding */
+            transition: all 0.25s ease-out;
         }
 
         #yesBtn { background: #ffffff; color: #1b2735; position: relative; z-index: 2; }
-        
-        #noBtn { 
-            background: #222; 
-            color: #888; 
-            position: absolute;
-            left: 260px; /* Aligned next to Yes */
-            z-index: 999;
-        }
+        #noBtn { background: #222; color: #888; position: absolute; left: 260px; z-index: 999; }
 
+        /* Celebration Card Styling */
         #celebration { display: none; }
         .savage { 
-            font-size: 2rem; 
-            text-transform: uppercase; 
-            background: linear-gradient(to right, #a18cd1 0%, #fbc2eb 100%);
+            font-size: 1.8rem; 
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #a18cd1, #fbc2eb);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-    </style>
-</head>
-<body>
 
-    <div id="container">
-        <div id="main-content">
-            <span class="space-icon">🚀</span>
-            <h1>Ron, will you be my valentine?</h1>
-            <div class="btn-wrapper">
-                <button id="yesBtn" class="btn" onclick="accept()">Yes</button>
-                <button id="noBtn" class="btn" onmouseover="moveButton()">No</button>
-            </div>
-        </div>
-
-        <div id="celebration">
-            <span class="space-icon">🛸✨👑</span>
-            <h1 class="savage">Took you long enough, Ron.</h1>
-            <p style="font-size: 1.1rem; margin-top: 15px; color: #e0e0e0; letter-spacing: 0.5px;">
-                I knew you didn't have a choice in this galaxy anyway. ❤️
-            </p>
-        </div>
-    </div>
-
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-
-        function moveButton() {
-            // Calculate limits so it stays strictly on screen
-            const padding = 100;
-            const maxWidth = window.innerWidth - 150;
-            const maxHeight = window.innerHeight - 100;
-
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxWidth));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxHeight));
-
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-            
-            // Check for Yes button overlap
-            const yesRect = yesBtn.getBoundingClientRect();
-            if (Math.abs(randomX - yesRect.left) < 150 && Math.abs(randomY - yesRect.top) < 100) {
-                noBtn.style.left = (randomX + 200 > maxWidth ? randomX - 200 : randomX + 200) + 'px';
-            }
-        }
-
-        function accept() {
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('celebration').style.display = 'block';
-            // Smoothly shift the galaxy color to a more vibrant purple/blue nebula
-            document.body.style.background = "radial-gradient(circle at center, #2b1055 0%, #7597de 100%)";
-        }
-    </script>
-</body>
-</html>
+        .date-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px;
+            border
