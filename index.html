@@ -28,14 +28,21 @@
             width: 90%;
             max-width: 500px;
             position: relative;
+            z-index: 1;
         }
 
-        /* High-reliability Happy Penguin */
-        .penguin { 
-            width: 200px; 
-            height: 200px; 
+        /* Animated Happy Penguin using a built-in character */
+        .penguin-icon { 
+            font-size: 100px;
+            display: block;
             margin-bottom: 20px;
-            border-radius: 20px;
+            animation: waddle 1s infinite;
+        }
+
+        @keyframes waddle {
+            0% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+            100% { transform: rotate(-10deg); }
         }
 
         h1 {
@@ -48,10 +55,11 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            height: 80px;
+            height: 70px;
+            position: relative;
         }
 
-        /* Buttons forced to be identical size */
+        /* Guaranteed Identical Button Sizes */
         .btn {
             width: 130px !important;
             height: 60px !important;
@@ -64,17 +72,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
         }
 
-        #yesBtn { background-color: white; color: #ff0055; position: relative; }
+        #yesBtn { background-color: white; color: #ff0055; z-index: 2; }
         
         #noBtn { 
             background-color: #333; 
             color: white; 
             position: absolute; 
-            z-index: 9999;
-            transition: none; /* Instant jump */
+            z-index: 999;
         }
 
         #celebration { display: none; }
@@ -85,7 +91,7 @@
 
     <div id="container">
         <div id="main-content">
-            <img class="penguin" src="https://i.imgur.com/vHdfDms.gif" alt="Happy Penguin">
+            <span class="penguin-icon">🐧</span>
             <h1>Ron, will you be my valentine?</h1>
             <div class="btn-wrapper">
                 <button id="yesBtn" class="btn" onclick="accept()">Yes</button>
@@ -94,7 +100,7 @@
         </div>
 
         <div id="celebration">
-            <img class="penguin" src="https://i.imgur.com/vHdfDms.gif" alt="Success">
+            <span class="penguin-icon">✨🐧✨</span>
             <h1 class="savage">Took you long enough, Ron.</h1>
             <p style="font-size: 1.2rem; margin-top: 10px;">I knew you didn't have a choice anyway. ❤️</p>
         </div>
@@ -106,23 +112,23 @@
 
         function moveButton() {
             const yesRect = yesBtn.getBoundingClientRect();
-            const btnWidth = 130;
-            const btnHeight = 60;
+            const padding = 20; // Keeps it away from screen edges
             
             let newX, newY;
-            let isOverlapping = true;
+            let safe = false;
 
-            // Keep trying until the "No" button is at least 150px away from "Yes"
-            while (isOverlapping) {
-                newX = Math.random() * (window.innerWidth - btnWidth);
-                newY = Math.random() * (window.innerHeight - btnHeight);
+            while (!safe) {
+                // Pick a random spot anywhere on the screen
+                newX = Math.random() * (window.innerWidth - 130 - padding);
+                newY = Math.random() * (window.innerHeight - 60 - padding);
 
-                const buffer = 150;
-                const horizontalOverlap = newX + btnWidth > yesRect.left - buffer && newX < yesRect.right + buffer;
-                const verticalOverlap = newY + btnHeight > yesRect.top - buffer && newY < yesRect.bottom + buffer;
+                // Check distance from Yes button (avoid 150px around it)
+                const distBox = 150;
+                const overlapsX = newX + 130 > yesRect.left - distBox && newX < yesRect.right + distBox;
+                const overlapsY = newY + 60 > yesRect.top - distBox && newY < yesRect.bottom + distBox;
 
-                if (!horizontalOverlap || !verticalOverlap) {
-                    isOverlapping = false;
+                if (!overlapsX || !overlapsY) {
+                    safe = true;
                 }
             }
 
