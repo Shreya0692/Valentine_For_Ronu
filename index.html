@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine?</title>
+    <title>For Ronu ❤️</title>
     <style>
         body {
             display: flex;
@@ -11,49 +11,114 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #ffe6e6;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
+            margin: 0;
+            background-color: #fff0f3;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* Prevents scrollbars when button moves */
         }
-        h1 { color: #d63384; font-size: 3rem; }
-        .buttons { margin-top: 20px; position: relative; width: 100%; height: 100px; display: flex; justify-content: center; }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+        }
+
+        /* The Cute Bunny */
+        .bunny {
+            font-size: 80px;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px white;
+        }
+
+        .buttons {
+            margin-top: 30px;
+            position: relative;
+            width: 300px;
+            height: 100px;
+        }
+
         button {
-            padding: 15px 30px;
+            padding: 15px 35px;
             font-size: 1.2rem;
+            font-weight: bold;
             border: none;
-            border-radius: 10px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
         }
-        #yesBtn { background-color: #ff4d6d; color: white; margin-right: 20px; }
-        #noBtn { background-color: #adb5bd; color: white; position: absolute; }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            position: absolute;
+            left: 0;
+        }
+
+        #noBtn {
+            background-color: #adb5bd;
+            color: white;
+            position: absolute;
+            right: 0;
+            z-index: 999;
+        }
+
+        #celebration {
+            display: none;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <h1 id="question">Will you be my Valentine? ❤️</h1>
-    <div id="celebration" style="display:none; font-size: 5rem;">🎉🥰💖</div>
+    <div id="main-content" class="container">
+        <div class="bunny">(\_/)<br>( •_•)<br>/ >❤️</div>
+        <h1>Ronu, will you be my valentine?</h1>
+        
+        <div class="buttons">
+            <button id="yesBtn" onclick="accept()">Yes</button>
+            <button id="noBtn" onmouseover="moveButton()">No</button>
+        </div>
+    </div>
 
-    <div class="buttons" id="btnContainer">
-        <button id="yesBtn" onclick="accept()">Yes</button>
-        <button id="noBtn" onmouseover="moveButton()">No</button>
+    <div id="celebration">
+        <div class="bunny">(\_/)<br>( ^.^) <br>c(”)(”)</div>
+        <h1 style="font-size: 3.5rem;">Yay! I knew it! 😘❤️</h1>
+        <p style="font-size: 1.5rem; color: #ff4d6d;">I love you, Ronu!</p>
     </div>
 
     <script>
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
-            // Calculate random positions within the screen boundaries
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
+            // This math keeps the button within the visible area of the screen
+            const padding = 50;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            noBtn.style.position = 'fixed'; // Changes to fixed so it can move anywhere
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
         }
 
         function accept() {
-            document.getElementById('question').innerHTML = "I knew you'd say yes! 😘";
-            document.getElementById('btnContainer').style.display = 'none';
+            document.getElementById('main-content').style.display = 'none';
             document.getElementById('celebration').style.display = 'block';
+            document.body.style.backgroundColor = "#ffccd5";
         }
     </script>
 </body>
